@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 	"unicode/utf16"
 )
@@ -48,8 +49,8 @@ func formatUnicodeName(slug string) string {
 	return formatted
 }
 
-func ConvertJson2Go() {
-	jsonFile, err := os.Open("emojis.json")
+func ConvertJson2Go(jsonPath string, outputPath string) {
+	jsonFile, err := os.Open(filepath.Join(jsonPath, "emojisjson"))
 	if err != nil {
 		fmt.Println("Error opening JSON file:", err)
 		return
@@ -115,7 +116,7 @@ func ConvertJson2Go() {
 			}
 		}
 	}
-	goFile, err := os.Create("emojis.go")
+	goFile, err := os.Create(filepath.Join(outputPath, "emojis.go"))
 	if err != nil {
 		fmt.Println("Error creating Go file:", err)
 		return
